@@ -77,7 +77,7 @@ URLs:
 4. Content extracted from Figma `38:170`:
    - Projects: Edtech migration; AI-first commodity trade platform; PG
      management system (title + desc + tags each)
-   - Services: xxx3 numbered offerings with tag chips
+   - Services: 3 numbered offerings with tag chips
    - Process: Understand / Design / Build / Launch and Refine (icons fetched)
    - About: "How I Got Here" five years story + portrait
    - Contact: "Got a Site or Product to Fix, Launch, or Grow?"

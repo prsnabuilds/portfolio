@@ -1,0 +1,8 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "prasanna-portfolio",
+  "compatibility_date": "2026-10-13",
+  "assets": {
+    "directory": "./dist"
+  }
+}

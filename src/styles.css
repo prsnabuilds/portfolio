@@ -101,7 +101,7 @@
 }
 
 /* ============================================================
-   Design tokens — from Figma nodes 52:1493 / 38:170
+   Design tokens
    ============================================================ */
 :root {
   --color-bg: #ffffff;
@@ -115,7 +115,7 @@
   --font-display: "ZT Bros Oskon 90s", Georgia, "Times New Roman", serif;
   --font-body: "Britti Sans Trial", "Helvetica Neue", Arial, sans-serif;
 
-  --content-width: 1080px;
+  --content-width: 460px;
 }
 
 *,
@@ -147,131 +147,31 @@ img {
   display: block;
 }
 
-.container {
-  width: min(var(--content-width), calc(100% - 40px));
-  margin-inline: auto;
-}
-
-/* Section headers: centered "/kicker" + big title */
-.section-head {
+/* ============================================================
+   Layout — single narrow column, tab-switched content
+   ============================================================ */
+.page {
+  min-height: 100svh;
+  padding: 96px 0 40px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
-  text-align: center;
 }
 
-.section-head__kicker {
-  margin: 0;
-  font-size: 14px;
-  letter-spacing: -0.14px;
-  color: var(--color-ink-soft);
-}
-
-.section-head__title {
-  margin: 0;
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: 40px;
-  line-height: 1.15;
-  letter-spacing: -0.2px;
-}
-
-/* Divider lines between sections */
-.divider {
-  border: 0;
-  border-top: 1px solid var(--color-line);
-  width: min(var(--content-width), calc(100% - 40px));
-  margin: 0 auto;
-}
-
-/* Tag chips */
-.tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 14px;
-  border: 1px solid var(--color-line);
-  border-radius: 999px;
-  padding: 12px 20px;
-  font-size: 16px;
-  line-height: 18px;
-  color: var(--color-ink);
-  white-space: nowrap;
-}
-
-.tag--dotted::before {
-  content: "";
-  width: 6.7px;
-  height: 6.7px;
-  border-radius: 50%;
-  background: var(--color-ink);
-}
-
-/* ============================================================
-   Top bar
-   ============================================================ */
-.topbar {
-  position: absolute;
-  top: 52px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: min(var(--content-width), calc(100% - 40px));
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  z-index: 10;
-}
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  border-radius: 8px;
-  backdrop-filter: blur(7px);
-  -webkit-backdrop-filter: blur(7px);
-}
-
-.brand__name {
-  font-weight: 400;
-  font-size: 14px;
-  letter-spacing: -0.14px;
-  color: var(--color-ink);
-}
-
-.cta {
-  background: var(--color-ink);
-  color: var(--color-eye);
-  font-weight: 400;
-  font-size: 14px;
-  letter-spacing: -0.14px;
-  text-align: center;
-  padding: 12px 18px;
-  border-radius: 8px;
-  transition: opacity 150ms ease;
-}
-
-.cta:hover {
-  opacity: 0.85;
-}
-
-/* ============================================================
-   Hero
-   ============================================================ */
 .hero {
+  width: min(var(--content-width), calc(100% - 40px));
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 16px;
-  padding-top: 160px;
-  padding-bottom: 96px;
+  flex: none;
 }
 
 .hero__intro {
+  margin-top: 8px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 8px;
-  color: var(--color-ink);
 }
 
 .hero__title {
@@ -285,7 +185,6 @@ img {
 }
 
 .hero__title em {
-  font-family: inherit;
   font-style: italic;
 }
 
@@ -296,18 +195,22 @@ img {
   line-height: 1.34;
   letter-spacing: 0.32px;
   text-align: center;
-  max-width: 320px;
+  max-width: 324px;
 }
 
-/* Pill navigation */
+/* Pill navigation — sticky so it stays reachable while scrolled */
 .pillnav {
+  position: sticky;
+  top: 16px;
+  z-index: 20;
+  margin-top: 16px;
   display: flex;
   align-items: flex-start;
   gap: 4px;
   background: var(--color-surface);
   border-radius: 90px;
   padding: 10px;
-  overflow: hidden;
+  overflow-x: auto;
 }
 
 .pillnav__item {
@@ -335,24 +238,100 @@ img {
   color: var(--color-ink);
 }
 
-/* ============================================================
-   Works
-   ============================================================ */
-.works {
-  padding: 88px 0 96px;
+/* Swapped tab content */
+.tab-content {
+  margin-top: 16px;
+  width: 100%;
+  animation: tab-in 280ms ease both;
 }
 
-.works__list {
+@keyframes tab-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.block {
   display: flex;
   flex-direction: column;
-  gap: 72px;
-  margin-top: 64px;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.block__kicker {
+  margin: 0;
+  font-weight: 400;
+  font-size: 14px;
+  letter-spacing: -0.14px;
+  color: var(--color-ink-soft);
+}
+
+.block__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 1.2;
+  letter-spacing: -0.14px;
+}
+
+/* Tag chips */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid var(--color-line);
+  border-radius: 999px;
+  padding: 10px 18px;
+  font-size: 14px;
+  line-height: 16px;
+  color: var(--color-ink);
+  white-space: nowrap;
+}
+
+.tag--dotted::before {
+  content: "";
+  width: 6.7px;
+  height: 6.7px;
+  border-radius: 50%;
+  background: var(--color-ink);
+  flex: none;
+}
+
+/* Dark button (Contact) */
+.cta {
+  background: var(--color-ink);
+  color: var(--color-eye);
+  font-weight: 400;
+  font-size: 14px;
+  letter-spacing: -0.14px;
+  text-align: center;
+  padding: 12px 18px;
+  border-radius: 8px;
+  transition: opacity 150ms ease;
+}
+
+.cta:hover {
+  opacity: 0.85;
+}
+
+/* ============================================================
+   Works tab
+   ============================================================ */
+.works__list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 44px;
 }
 
 .project {
-  display: grid;
-  grid-template-columns: 57.1fr 8.9fr 45fr;
-  align-items: start;
+  display: block;
 }
 
 .project__media {
@@ -360,7 +339,7 @@ img {
   background: var(--color-surface-alt);
   border-radius: 16px;
   overflow: hidden;
-  aspect-ratio: 615 / 346;
+  aspect-ratio: 3840 / 2160;
   position: relative;
 }
 
@@ -376,7 +355,6 @@ img {
   transform: scale(1.03);
 }
 
-/* Placeholder treatment when no artwork exists yet */
 .project__media--empty::after {
   content: "Screenshot coming soon";
   position: absolute;
@@ -389,24 +367,20 @@ img {
 }
 
 .project__body {
-  padding-top: 12px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 16px;
+  gap: 8px;
+  margin-top: 16px;
+  padding-left: 4px;
 }
 
 .project__title {
   margin: 0;
   font-weight: 400;
-  font-size: 28px;
-  line-height: 1.2;
-  letter-spacing: -0.28px;
-  color: var(--color-ink);
-  transition: color 150ms ease;
-}
-
-.project:hover .project__title {
+  font-size: 24px;
+  line-height: 1.15;
+  letter-spacing: -0.24px;
   color: var(--color-ink);
 }
 
@@ -414,9 +388,8 @@ img {
   margin: 0;
   font-weight: 300;
   font-size: 16px;
-  line-height: 1.4;
+  line-height: 1.34;
   color: var(--color-ink-soft);
-  max-width: 460px;
 }
 
 .project__tags {
@@ -427,36 +400,33 @@ img {
 }
 
 /* ============================================================
-   Services
+   Services tab (+ process)
    ============================================================ */
-.services {
-  padding: 88px 0 96px;
-}
-
 .services__list {
-  margin-top: 56px;
-  border-top: 1px solid var(--color-line);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
 }
 
 .service {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 64px;
-  padding: 44px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  padding-bottom: 36px;
   border-bottom: 1px solid var(--color-line);
 }
 
-.service__left {
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
-  padding-left: 20px;
+.service:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
 }
 
 .service__number {
   font-weight: 400;
-  font-size: 16px;
-  line-height: 18px;
+  font-size: 14px;
+  letter-spacing: -0.14px;
   color: var(--color-ink-soft);
 }
 
@@ -464,65 +434,68 @@ img {
   margin: 0;
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: 30px;
+  font-size: 28px;
   line-height: 1.2;
-  letter-spacing: -0.15px;
-  max-width: 480px;
+  letter-spacing: -0.14px;
 }
 
 .service__desc {
   margin: 0;
   font-weight: 300;
   font-size: 16px;
-  line-height: 1.4;
+  line-height: 1.34;
   color: var(--color-ink-soft);
-  max-width: 493px;
 }
 
 .service__tags {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-top: 20px;
-  max-width: 493px;
+  margin-top: 4px;
 }
 
 .service__tags .tag {
-  padding: 4px 20px 4px 14px;
+  padding: 6px 16px 6px 12px;
   font-size: 13px;
   letter-spacing: 0.2px;
 }
 
 .service__tags .tag::before {
-  margin-top: 1px;
+  margin-top: 0;
 }
 
 .service__tags .tag:nth-child(-n + 2) {
   text-transform: uppercase;
 }
 
-/* ============================================================
-   Process
-   ============================================================ */
 .process {
-  padding: 88px 0 96px;
-}
-
-.process__grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
+  width: 100%;
   margin-top: 56px;
-}
-
-.step {
-  border: 1px solid var(--color-line);
-  border-radius: 16px;
-  padding: 36px;
+  padding-top: 44px;
+  border-top: 1px solid var(--color-line);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 20px;
+  gap: 12px;
+}
+
+.process__grid {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.step {
+  width: 100%;
+  border: 1px solid var(--color-line);
+  border-radius: 16px;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
   transition: background 200ms ease;
 }
 
@@ -539,35 +512,24 @@ img {
   margin: 0;
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: 26px;
+  font-size: 24px;
   line-height: 1.2;
-  letter-spacing: -0.13px;
+  letter-spacing: -0.12px;
 }
 
 .step__desc {
   margin: 0;
   font-weight: 300;
   font-size: 16px;
-  line-height: 1.4;
+  line-height: 1.34;
   color: var(--color-ink-soft);
-  max-width: 460px;
 }
 
 /* ============================================================
-   About
+   About tab
    ============================================================ */
-.about {
-  padding: 88px 0 96px;
-}
-
-.about__inner {
-  display: grid;
-  grid-template-columns: 225fr 52fr 724fr;
-  padding-left: 4%;
-  align-items: start;
-}
-
 .about__media {
+  width: 240px;
   border-radius: 16px;
   overflow: hidden;
   background: var(--color-surface-alt);
@@ -584,63 +546,49 @@ img {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 6px;
-}
-
-.about__body {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  padding-top: 4px;
+  gap: 4px;
 }
 
 .about__text {
-  margin: 0;
+  margin: 8px 0 0;
   font-weight: 300;
   font-size: 17px;
   line-height: 1.5;
   color: var(--color-ink);
-  max-width: 640px;
 }
 
 /* ============================================================
-   Contact
+   Contact tab
    ============================================================ */
 .contact {
-  padding: 96px 0 120px;
-  display: flex;
-  flex-direction: column;
+  width: 100%;
   align-items: center;
-  gap: 8px;
   text-align: center;
-}
-
-.contact__kicker {
-  margin: 0;
-  font-weight: 400;
-  font-size: 14px;
-  letter-spacing: -0.14px;
-  color: var(--color-ink-soft);
+  padding-top: 24px;
 }
 
 .contact__title {
   margin: 0;
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: 40px;
-  line-height: 1.15;
-  letter-spacing: -0.2px;
-  max-width: 620px;
+  font-size: 32px;
+  line-height: 1.25;
+  letter-spacing: -0.16px;
+  max-width: 420px;
 }
 
 .contact__tray {
-  margin-top: 32px;
+  margin-top: 24px;
   display: flex;
   align-items: center;
   gap: 4px;
   background: var(--color-surface);
   border-radius: 90px;
   padding: 10px;
+}
+
+.contact__tray .cta {
+  border-radius: 60px;
 }
 
 .contact__email {
@@ -656,89 +604,53 @@ img {
   white-space: nowrap;
 }
 
-.contact__tray .cta {
-  border-radius: 60px;
-}
-
 /* ============================================================
    Footer
    ============================================================ */
 .footer {
-  padding: 40px 0 48px;
+  margin-top: auto;
+  padding-top: 56px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
 }
 
-.footer__inner {
+.brand {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
+  gap: 6px;
+  border-radius: 8px;
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
 }
 
-.footer__note {
-  font-weight: 300;
-  font-size: 14px;
-  letter-spacing: -0.14px;
-  color: var(--color-ink-soft);
-}
-
-.footer__mail {
+.brand__name {
   font-weight: 400;
   font-size: 14px;
   letter-spacing: -0.14px;
   color: var(--color-ink);
+}
+
+.footer__mail {
+  font-weight: 400;
+  font-size: 13px;
+  letter-spacing: -0.13px;
+  color: var(--color-ink-soft);
   border-bottom: 1px solid var(--color-line);
-  transition: opacity 150ms ease;
+  transition: color 150ms ease;
 }
 
 .footer__mail:hover {
-  opacity: 0.7;
+  color: var(--color-ink);
 }
 
 /* ============================================================
-   Responsive
+   Small screens
    ============================================================ */
-@media (max-width: 900px) {
-  .project {
-    grid-template-columns: 1fr;
-  }
-
-  .project__media {
-    max-width: none;
-    width: 100%;
-  }
-
-  .service {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-
-  .process__grid {
-    grid-template-columns: 1fr;
-  }
-
-  .about__inner {
-    grid-template-columns: 1fr;
-    gap: 32px;
-  }
-
-  .about__media {
-    max-width: 320px;
-  }
-
-  .section-head__title,
-  .contact__title {
-    font-size: 32px;
-  }
-}
-
 @media (max-width: 640px) {
-  .topbar {
-    top: 24px;
-  }
-
-  .hero {
-    padding-top: 112px;
+  .page {
+    padding-top: 72px;
   }
 
   .hero__title {
@@ -746,8 +658,8 @@ img {
   }
 
   .pillnav {
-    max-width: calc(100vw - 40px);
-    overflow-x: auto;
+    padding: 8px;
+    max-width: 100%;
   }
 
   .pillnav__item {
@@ -756,7 +668,7 @@ img {
   }
 
   .project__title {
-    font-size: 24px;
+    font-size: 22px;
   }
 
   .contact__tray {
@@ -780,5 +692,98 @@ img {
   *::before,
   *::after {
     transition: none !important;
+    animation: none !important;
   }
+}
+
+/* ============================================================
+   Face logo — hair (star) + round head (vector) + eyes,
+   layered exactly as in the Figma file; percent-based so it scales
+   ============================================================ */
+.face {
+  position: relative;
+  aspect-ratio: 43.783 / 47.653;
+  flex: none;
+  display: block;
+}
+
+.face--lg {
+  width: 43.783px;
+}
+
+.face--sm {
+  width: 21.644px;
+}
+
+.face img {
+  width: 100%;
+  height: 100%;
+}
+
+.face__star {
+  position: absolute;
+  left: 3.221%;
+  top: 12.407%;
+  width: 94.789%;
+  height: 87.591%;
+}
+
+.face__vector {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 49.409%;
+}
+
+.face__vector-inner {
+  position: absolute;
+  inset: 3.96% 0 1.37% 1.67%;
+}
+
+.face__vector-inner img {
+  width: 100%;
+  height: 100%;
+}
+
+.face__eyes {
+  position: absolute;
+  left: 40.908%;
+  top: 46.418%;
+  width: 35.168%;
+  height: 17.073%;
+}
+
+.face__eye {
+  position: absolute;
+  top: 0.862%;
+  width: 27.141%;
+  height: 98.264%;
+}
+
+.face__eye--l {
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28.938%;
+}
+
+.face__pupil {
+  width: 93.784%;
+  height: 98.264%;
+}
+
+.face__eye--l .face__pupil,
+.face__eye--r {
+  background: var(--color-eye);
+  border-radius: 999px;
+}
+
+.face__eye--r {
+  left: 72.863%;
+}
+
+.face__eye--l .face__pupil {
+  transform: rotate(2deg);
 }
